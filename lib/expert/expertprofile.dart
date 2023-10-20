@@ -1,13 +1,11 @@
-import 'dart:io';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class ExpertsPage extends StatefulWidget {
   @override
@@ -20,6 +18,7 @@ class _ExpertsPageState extends State<ExpertsPage> {
       TextEditingController();
   final TextEditingController institutionController = TextEditingController();
   File? profilePicture;
+  final UserId = FirebaseAuth.instance.currentUser!.uid;
   PlatformFile? cvDocument;
   FilePickerResult? result;
   var file;
@@ -36,7 +35,8 @@ class _ExpertsPageState extends State<ExpertsPage> {
     ))!;
     if (result == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('No paper has been selected')));
+        const SnackBar(content: Text('No paper has been selected')),
+      );
     }
 
     file = result!.files.first;
@@ -95,7 +95,7 @@ class _ExpertsPageState extends State<ExpertsPage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Submition successful'),
+          title: Text('Submission successful'),
           content: Text('Proceed?'),
           actions: <Widget>[
             TextButton(
@@ -120,101 +120,166 @@ class _ExpertsPageState extends State<ExpertsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Expert Registration"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.contacts),
-            onPressed: () {
-              // Handle contacts action
-            },
-          ),
-        ],
+        backgroundColor: Colors.white,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(
+              Icons.contacts,
+              color: Colors.orange,
+            ),
+            Text(
+              'EXPERTS',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(width: screenWidth * 0.1),
+          ],
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Icon(Icons.contacts, color: Colors.blue),
-                Text("ADD PROFILE PHOTO"),
-              ],
-            ),
-            ElevatedButton.icon(
-              onPressed: _pickImage,
-              icon: Icon(Icons.camera_alt),
-              label: Text("Choose Image"),
-            ),
-            Text("ADD CV AND DOCUMENTS"),
-            ElevatedButton.icon(
-              onPressed: pickpapers,
-              icon: Icon(Icons.file_copy),
-              label: Text("Choose pdf"),
-            ),
-            Text(
-              'Name:',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+        padding: EdgeInsets.all(screenWidth * 0.05),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.person,
+                    color: Colors.black,
+                    size: screenHeight * 0.1,
+                  ),
+                  Text(
+                    'ADD PROFILE PHOTO',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: screenHeight * 0.025,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            TextFormField(
-              controller: nameController,
-              decoration: InputDecoration(
-                hintText: 'Enter your name',
+              SizedBox(height: screenHeight * 0.03),
+              ElevatedButton(
+                onPressed: () {
+                  _pickImage();
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.green),
+                  minimumSize: MaterialStateProperty.all(
+                    Size(screenWidth * 0.6, screenHeight * 0.08),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                      size: screenHeight * 0.05,
+                    ),
+                    Icon(
+                      Icons.file_copy,
+                      color: Colors.white,
+                      size: screenHeight * 0.05,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Field of Specialization:',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+              SizedBox(height: screenHeight * 0.03),
+              Text(
+                'ADD CV AND DOCUMENTS',
+                style: TextStyle(fontSize: screenHeight * 0.025),
               ),
-            ),
-            TextFormField(
-              controller: specializationController,
-              decoration: InputDecoration(
-                hintText: 'Enter your field of specialization',
+              SizedBox(height: screenHeight * 0.03),
+              ElevatedButton(
+                onPressed: () {
+                  pickpapers();
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.green),
+                  minimumSize: MaterialStateProperty.all(
+                    Size(screenWidth * 0.6, screenHeight * 0.08),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.insert_drive_file,
+                      color: Colors.white,
+                      size: screenHeight * 0.05,
+                    ),
+                    SizedBox(width: screenWidth * 0.04),
+                    Text(
+                      'Choose Files',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: screenHeight * 0.025,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Institution:',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+              SizedBox(height: screenHeight * 0.03),
+              TextFormField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  hintText: 'Enter your name',
+                ),
               ),
-            ),
-            TextFormField(
-              controller: institutionController,
-              decoration: InputDecoration(
-                hintText: 'Enter your institution (optional)',
+              SizedBox(height: screenHeight * 0.02),
+              TextFormField(
+                controller: specializationController,
+                decoration: InputDecoration(
+                  hintText: 'Enter your field of specialization',
+                ),
               ),
-            ),
-            SizedBox(height: 32),
-            TextButton(
-              onPressed: () async {
-                User? user = _auth.currentUser;
-                if (user != null) {
-                  await _firestore.collection('Experts').doc(user.email).set({
+              SizedBox(height: screenHeight * 0.02),
+              TextFormField(
+                controller: institutionController,
+                decoration: InputDecoration(
+                  hintText: 'Enter your institution (optional)',
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.04),
+              ElevatedButton(
+                onPressed: () async {
+                  User? user = _auth.currentUser;
+                  await _firestore.collection('Experts').doc(user!.email).set({
                     'name': nameController.text,
                     'email': user.email,
                     'profilePictureUrl': pictureUrl,
                     'Specialization': specializationController.text,
-                    'Institution': institutionController.text
+                    'Institution': institutionController.text,
+                    'uid': UserId
                   });
-                  await _showConfirmationDialog(); // Show the confirmation dialog
-                }
-              },
-              child: Text(
-                "Submit",
-                style: TextStyle(color: Colors.green),
+
+                  await _showConfirmationDialog();
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.orange),
+                  minimumSize: MaterialStateProperty.all(
+                    Size(screenWidth * 0.6, screenHeight * 0.08),
+                  ),
+                ),
+                child: Text(
+                  'VERIFY',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: screenHeight * 0.025,
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

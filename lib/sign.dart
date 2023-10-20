@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
           height: 300,
         ),
         Text(
-          'Welcome back. Log into your account',
+          'Welcome back. \n Log into your account\n',
           style: TextStyle(
             fontSize: 16,
             color: Colors.black,
@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
         labelText: title,
         border: OutlineInputBorder(),
         filled: true,
-        fillColor: Colors.grey, // Grey input field
+        fillColor: const Color.fromARGB(255, 248, 247, 247), // Grey input field
       ),
     );
   }

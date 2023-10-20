@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yoo_katale/expert/expertprofile.dart';
 import 'package:yoo_katale/expert/expertslist.dart';
 import 'package:yoo_katale/screens/detect.dart';
+import 'package:yoo_katale/test.dart';
 
 void main() {
   runApp(MyApp());
@@ -103,7 +104,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       //_buildGridSeparator(),
                       _buildDateGrid(
-                          "RAINY SEASON STARTS \n THUR, 30 APRIL 2023",
+                          "RAINY \n SEASON\n STARTS \n \nTHUR, 30 APRIL 2023",
                           null,
                           Color.fromARGB(255, 35, 80, 58),
                           height: _calculateDateGridHeight(context)),
@@ -274,7 +275,7 @@ class HomePage extends StatelessWidget {
         height: height,
         color: backgroundColor,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (icon != null)
               Icon(
@@ -282,11 +283,13 @@ class HomePage extends StatelessWidget {
                 color: Colors.white,
                 size: 36.0,
               ),
-            Text(
-              text,
-              style: TextStyle(
-                color: const Color.fromARGB(255, 250, 249, 249),
-                fontSize: 18.0,
+            Center(
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: const Color.fromARGB(255, 250, 249, 249),
+                  fontSize: 18.0,
+                ),
               ),
             ),
           ],
@@ -305,15 +308,9 @@ Widget _buildDateGridleft(String text, IconData? icon, Color backgroundColor,
     child: Container(
       height: height,
       color: backgroundColor,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (icon != null)
-            Icon(
-              icon,
-              color: Colors.white,
-              size: 36.0,
-            ),
           Text(
             text,
             style: TextStyle(
@@ -321,6 +318,12 @@ Widget _buildDateGridleft(String text, IconData? icon, Color backgroundColor,
               fontSize: 18.0,
             ),
           ),
+          if (icon != null)
+            Icon(
+              icon,
+              color: Colors.white,
+              size: 36.0,
+            ),
         ],
       ),
     ),

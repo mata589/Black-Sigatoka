@@ -9,9 +9,30 @@ class ExpertListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expert List'),
+        title: Text(
+          'Your clients',
+          style: TextStyle(color: Colors.black), // Black text
+        ),
+        centerTitle: true,
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       // Add your action for the curved button
+        //     },
+        //     icon: Icon(
+        //       Icons.add_circle,
+        //       size: 36,
+        //       color: Colors.black, // Black color for the button
+        //     ),
+        //   ),
+        // ],
+        backgroundColor: Colors.white, // White background
+        automaticallyImplyLeading: false, // Remove the back arrow
       ),
-      body: ExpertList(),
+      body: Container(
+        color: Colors.lightBlue[50], // Pale blue background
+        child: ExpertList(),
+      ),
     );
   }
 }
@@ -23,6 +44,7 @@ class ExpertList extends StatefulWidget {
 
 class _ExpertListState extends State<ExpertList> {
   void callChatDetailScreen(String name, String uid) {}
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -45,7 +67,7 @@ class _ExpertListState extends State<ExpertList> {
             var specialization = data['Specialization'];
             var institution = data['Institution'];
             var profilePictureUrl = data['profilePictureUrl'];
-            var uid = 1;
+            var uid = data['uid'];
 
             return ListTile(
               leading: CircleAvatar(
@@ -61,12 +83,12 @@ class _ExpertListState extends State<ExpertList> {
               ),
               trailing: ElevatedButton(
                 onPressed: () {
-                  // Pass the current expert to the UserItem widget
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (_) => ChatDetail(
-                  //           friendName: name,
-                  //           frienduid: uid,
-                  //         )));
+                  //Pass the current expert to the UserItem widget
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => ChatDetail(
+                            friendName: name,
+                            frienduid: uid,
+                          )));
                 },
                 child: Text('Chat'),
               ),

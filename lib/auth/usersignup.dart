@@ -64,7 +64,7 @@ class _UserRegistrationPageState extends State<UserRegistrationPage> {
         labelText: title,
         border: OutlineInputBorder(),
         filled: true,
-        fillColor: Colors.grey, // Grey input field
+        fillColor: Color.fromARGB(255, 248, 247, 247), // Grey input field
       ),
     );
   }
