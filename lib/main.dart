@@ -233,7 +233,7 @@ Future<void> main() async {
       // child:
       MaterialApp(
     //home: WidgetTree(),
-    home: SplashScreen(),
+    home: WidgetTree(),
     debugShowCheckedModeBanner: false,
   ));
 }
