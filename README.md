@@ -1,4 +1,4 @@
-# yoo_katale
+# Smart agriculture
 
 A new Flutter project.
 
