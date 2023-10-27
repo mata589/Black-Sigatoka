@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 //import 'package:yoo_katale/chat/provider/firebase_provider.dart';
-import 'package:yoo_katale/sign.dart';
+import 'package:yoo_katale/auth/sign.dart';
 import 'package:yoo_katale/splashscreen/splashscreens.dart';
 import 'package:yoo_katale/user_profile.dart';
 import 'package:yoo_katale/widget_tree.dart';

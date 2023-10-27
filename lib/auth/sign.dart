@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:yoo_katale/auth.dart';
+import 'package:yoo_katale/auth/auth.dart';
 import 'package:yoo_katale/auth/expertsignup.dart';
 import 'package:yoo_katale/auth/usersignup.dart';
-import 'package:yoo_katale/screens/newhomescreen.dart';
+import 'package:yoo_katale/auth/verification/OTP.dart';
+import 'package:yoo_katale/screens/homescreen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -120,6 +121,8 @@ class _LoginPageState extends State<LoginPage> {
           child: Text('Register as User', style: TextStyle(color: Colors.grey)),
           style: ElevatedButton.styleFrom(primary: Colors.white),
         ),
+
+        
         // ElevatedButton(
         //   onPressed: () {
         //     setState(() {

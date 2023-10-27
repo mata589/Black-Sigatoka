@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yoo_katale/chat/chat_detail.dart';
+import 'package:yoo_katale/expert/expertprofile.dart';
 
 import 'package:yoo_katale/model/user.dart';
 
@@ -10,22 +11,29 @@ class ExpertListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Your clients',
+          'Experts',
           style: TextStyle(color: Colors.black), // Black text
         ),
         centerTitle: true,
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       // Add your action for the curved button
-        //     },
-        //     icon: Icon(
-        //       Icons.add_circle,
-        //       size: 36,
-        //       color: Colors.black, // Black color for the button
-        //     ),
-        //   ),
-        // ],
+        actions: [
+         TextButton(
+  onPressed: () {
+     Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ExpertsPage()));
+  },
+  child: Text(
+    'Add Expert',
+    style: TextStyle(
+      fontSize: 16, // Adjust the font size as needed
+      color: Colors.blue, // Adjust the text color as needed
+    ),
+  ),
+)
+,
+                  
+        
+          
+        ],
         backgroundColor: Colors.white, // White background
         automaticallyImplyLeading: false, // Remove the back arrow
       ),

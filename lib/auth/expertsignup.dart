@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:yoo_katale/auth.dart';
+import 'package:yoo_katale/auth/auth.dart';
 
 class ExpertRegistrationPage extends StatefulWidget {
   const ExpertRegistrationPage({Key? key}) : super(key: key);

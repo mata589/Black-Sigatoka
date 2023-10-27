@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'package:yoo_katale/chat/view/search_screen.dart';
-import 'package:yoo_katale/screens/newhomescreen.dart';
-import 'package:yoo_katale/sign.dart';
+import 'package:yoo_katale/screens/homescreen.dart';
+import 'package:yoo_katale/auth/sign.dart';
 import 'package:yoo_katale/widget_tree.dart';
 
 class SplashScreen extends StatefulWidget {

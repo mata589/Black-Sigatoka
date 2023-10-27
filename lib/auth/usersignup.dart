@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:yoo_katale/auth.dart';
+import 'package:yoo_katale/auth/auth.dart';
+import 'package:yoo_katale/auth/verification/OTP.dart';
 
 class UserRegistrationPage extends StatefulWidget {
   const UserRegistrationPage({Key? key}) : super(key: key);
@@ -125,6 +126,16 @@ class _UserRegistrationPageState extends State<UserRegistrationPage> {
                       _errorMessage(),
                       SizedBox(height: 20),
                       _submitButton(),
+                      ElevatedButton(
+              onPressed: () {
+                // Navigate to the next page when the button is pressed
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PhoneOTPVerification()),
+                );
+              },
+              child: Text("Register using Phone Number instead"),
+            ),
                     ],
                   ),
                 ),

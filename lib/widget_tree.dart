@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:yoo_katale/auth.dart';
-import 'package:yoo_katale/home.dart';
+import 'package:yoo_katale/auth/auth.dart';
+import 'package:yoo_katale/auth/verification/OTP.dart';
 import 'package:yoo_katale/main.dart';
-import 'package:yoo_katale/screens/newhomescreen.dart';
-import 'package:yoo_katale/sign.dart';
+import 'package:yoo_katale/screens/homescreen.dart';
+import 'package:yoo_katale/auth/sign.dart';
 import 'package:yoo_katale/splashscreen/splashscreens.dart';
 
 class WidgetTree extends StatefulWidget {
@@ -24,6 +24,8 @@ class _WidgetTreeState extends State<WidgetTree> {
           if (snapshot.hasData) {
             //DashboardPage
             return HomePage();
+            //PhoneOTPVerification();
+            //HomePage();
 
             //HomeScreen();
           } else {
