@@ -56,7 +56,12 @@ class _ExpertListState extends State<ExpertList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('Experts').snapshots(),
+      stream: FirebaseFirestore.instance
+    .collection('Experts')
+    .where('TypeOfUser', isEqualTo: 'Expert')
+    .snapshots(),
+
+
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(

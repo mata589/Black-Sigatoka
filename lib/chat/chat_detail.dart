@@ -222,6 +222,7 @@ class _ChatDetail extends StatelessWidget {
             ),
             padding: EdgeInsets.symmetric(horizontal: 8.0),
             child: TextField(
+              controller: _textController,
               decoration: InputDecoration(
                 hintText: 'Write',
                 border: InputBorder.none,
@@ -236,7 +237,13 @@ class _ChatDetail extends StatelessWidget {
         // ),
         CupertinoButton(
           child: Icon(Icons.send_sharp),
-          onPressed: () => sendMessage(_textController.text),
+          onPressed: () {sendMessage(_textController.text);
+          print('================================');
+          print(_textController.text);
+          print('================================');
+          } 
+          // ignore: avoid_print
+          
         ),
         SizedBox(width: 8.0),
         Container(

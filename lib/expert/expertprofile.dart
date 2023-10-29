@@ -256,10 +256,12 @@ class _ExpertsPageState extends State<ExpertsPage> {
                   await _firestore.collection('Experts').doc(user!.email).set({
                     'name': nameController.text,
                     'email': user.email,
+                    'phoneNumber': user.phoneNumber,
                     'profilePictureUrl': pictureUrl,
                     'Specialization': specializationController.text,
                     'Institution': institutionController.text,
-                    'uid': UserId
+                    'uid': UserId ,
+                    'TypeOfUser':'Expert'
                   });
 
                   await _showConfirmationDialog();

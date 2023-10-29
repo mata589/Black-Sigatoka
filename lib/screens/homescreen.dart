@@ -7,8 +7,9 @@ import 'package:yoo_katale/expert/expertprofile.dart';
 import 'package:yoo_katale/expert/expertslist.dart';
 import 'package:yoo_katale/screens/detect.dart';
 import 'package:yoo_katale/test.dart';
+import 'package:yoo_katale/screens/plant_grid.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -31,6 +32,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,35 +54,35 @@ class _HomePageState extends State<HomePage> {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
-      expandedHeight: 130.0,
-      flexibleSpace: FlexibleSpaceBar(
-        background: Stack(
-      children: [
-        Positioned.fill(
-          child: Image.asset(
-            "assets/splash-screen1.png",
-            fit: BoxFit.cover,
-          ),
-        ),
-        Positioned(
-          right: 4.0, // Adjust the right position as needed
-          top: 16.0, // Adjust the top position as needed
-          child: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(Icons.menu,color: Colors.orange),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          },
-        ),
-        ),
-        ],
-          ),
-        ),
-        ),
-           
+              expandedHeight: 130.0,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: Image.asset(
+                        "assets/splash-screen1.png",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Positioned(
+                      right: 0.0, // Adjust the right position as needed
+                      top: 16.0, // Adjust the top position as needed
+                      child: Builder(
+                        builder: (BuildContext context) {
+                          return IconButton(
+                            icon: Icon(Icons.menu, color: Colors.orange),
+                            onPressed: () {
+                              Scaffold.of(context).openDrawer();
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
             SliverGrid(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: _calculateCrossAxisCount(
@@ -108,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                     label = "SELL";
                     iconColor = Colors.green;
                   }
-      
+
                   return _buildGridItem(icon!, label!, iconColor!, context);
                 },
                 childCount: 4,
@@ -185,17 +187,19 @@ class _HomePageState extends State<HomePage> {
         onTap: () {
           // Navigate to the DETECT screen
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => DetectPage(),
+            builder: (context) => Plants(),
+            //DetectPage(),
           ));
         },
         child: Container(
-           decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: const Color.fromARGB(255, 196, 193, 193), // Set the border color to red
-            width: 2.0, // Set the border width as needed
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: const Color.fromARGB(
+                  255, 196, 193, 193), // Set the border color to red
+              width: 2.0, // Set the border width as needed
+            ),
           ),
-        ),
           child: Center(
             child: CustomPaint(
               size: Size(100.0, 100.0),
@@ -228,19 +232,19 @@ class _HomePageState extends State<HomePage> {
     } else if (label == "EXPERTS") {
       return GestureDetector(
         onTap: () {
-          
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ExpertListPage(),
           ));
         },
         child: Container(
-         decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: const Color.fromARGB(255, 196, 193, 193), // Set the border color to red
-            width: 2.0, // Set the border width as needed
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: const Color.fromARGB(
+                  255, 196, 193, 193), // Set the border color to red
+              width: 2.0, // Set the border width as needed
+            ),
           ),
-        ),
           child: Center(
             child: CustomPaint(
               size: Size(100.0, 100.0),
@@ -272,21 +276,26 @@ class _HomePageState extends State<HomePage> {
       );
     } else {
       return ClipRRect(
-          borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(10.0), // Adjust the radius for the top-left corner
-        topRight: Radius.circular(50.0), // Adjust the radius for the top-right corner
-        bottomLeft: Radius.circular(100.0), // Adjust the radius for the bottom-left corner
-        bottomRight: Radius.circular(100.0), // Adjust the radius for the bottom-right corner
-      ),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(
+              10.0), // Adjust the radius for the top-left corner
+          topRight: Radius.circular(
+              50.0), // Adjust the radius for the top-right corner
+          bottomLeft: Radius.circular(
+              100.0), // Adjust the radius for the bottom-left corner
+          bottomRight: Radius.circular(
+              100.0), // Adjust the radius for the bottom-right corner
+        ),
         child: Container(
           decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: const Color.fromARGB(255, 196, 193, 193), // Set the border color to red
-            width: 2.0, // Set the border width as needed
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: const Color.fromARGB(
+                  255, 196, 193, 193), // Set the border color to red
+              width: 2.0, // Set the border width as needed
+            ),
           ),
-        ),
-         // color: Colors.white,
+          // color: Colors.white,
           child: Center(
             child: CustomPaint(
               size: Size(100.0, 100.0),
@@ -390,34 +399,28 @@ Widget _buildDateGridleft(String text, IconData? icon, Color backgroundColor,
     ),
   );
 }
+
 class DrawerWidget extends StatefulWidget {
   //final FirebaseAuth auth;
-  
-
-  
 
   @override
   _DrawerWidgetState createState() => _DrawerWidgetState();
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> {
- 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   void initState() {
     super.initState();
-   
   }
-
-
 
   Future<void> signOut() async {
     await auth.signOut();
     Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
   }
 
   @override
@@ -441,7 +444,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             onTap: () {
               // Navigate to the user's profile screen
               // You can implement this as needed
-             // Navigator.of(context).pop();
+              // Navigator.of(context).pop();
             },
           ),
           ListTile(
@@ -457,14 +460,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     );
   }
 }
-
-
-
-
-
-
-
-
 
 class LeafPainter extends CustomPainter {
   final Color pointColor;

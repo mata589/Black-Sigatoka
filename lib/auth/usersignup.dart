@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:yoo_katale/auth/auth.dart';
 import 'package:yoo_katale/auth/verification/OTP.dart';
+import 'package:yoo_katale/screens/homescreen.dart';
 
 class UserRegistrationPage extends StatefulWidget {
   const UserRegistrationPage({Key? key}) : super(key: key);
@@ -12,10 +14,12 @@ class UserRegistrationPage extends StatefulWidget {
 
 class _UserRegistrationPageState extends State<UserRegistrationPage> {
   String? errorMessage = '';
-
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
-
+  //final TextEditingController nameController = TextEditingController();
+    
   Future<void> registerUserWithEmailAndPassword() async {
     try {
       await Auth().createUserWithEmailAndPassword(
@@ -82,11 +86,64 @@ class _UserRegistrationPageState extends State<UserRegistrationPage> {
 
   Widget _submitButton() {
     return ElevatedButton(
-      onPressed: () {
-        registerUserWithEmailAndPassword();
+      onPressed: () async {
+        await registerUserWithEmailAndPassword();
+        User? user = _auth.currentUser;
+        print("=====================user is registered===========");
+        print(user);
+
+String? documentName;
+final UserId = FirebaseAuth.instance.currentUser?.uid;
+if (user != null) {
+  // Check if the user has an email
+  if (user.email != null && user.email!.isNotEmpty) {
+    // Use the user's email as the document name
+    documentName = user.email;
+    print("=====================user has an email :==========="+user.email.toString());
+  } else if (user.phoneNumber != null && user.phoneNumber!.isNotEmpty) {
+    // Use the user's phone number as the document name
+    print("=====================user has phone number :==========="+user.phoneNumber.toString());
+    documentName = user.phoneNumber;
+  }
+}
+
+if (documentName != null) {
+  print("=====================user document is created :===========");
+  await _firestore.collection('Experts').doc(documentName).set({
+    'name': '',
+    'email': user?.email,
+    'phoneNumber': user!.phoneNumber,
+    'profilePictureUrl': '',
+    'Specialization': '',
+    'Institution': '',
+    'uid': UserId,
+    'TypeOfUser':'user'
+  });
+}
+
+ try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _controllerEmail.text,
+        password: _controllerPassword.text,
+      );
+      // If login is successful, navigate to the home page
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } catch (e) {
+      // Handle authentication error (e.g., incorrect email or password)
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Registration failed. Check your email and password.'),
+          backgroundColor: Colors.red, // Added color for emphasis
+        ),
+      );
+    }
+
       },
       child: Text(
-        'Register as User',
+        'Register',
         style: TextStyle(
           fontSize: 16,
           color: Colors.white, // White text color
@@ -125,6 +182,12 @@ class _UserRegistrationPageState extends State<UserRegistrationPage> {
                       SizedBox(height: 10),
                       _errorMessage(),
                       SizedBox(height: 20),
+              //         TextFormField(
+              //   controller: nameController,
+              //   decoration: InputDecoration(
+              //     hintText: 'Enter your name',
+              //   ),
+              // ),
                       _submitButton(),
                       ElevatedButton(
               onPressed: () {
